@@ -4,3 +4,9 @@ create-user:
     - http:
         path: users/create
         method: POST
+register-user:
+  handler: ${self:custom.prefix_module, 'src/functions/users/'}register.handler
+  events:
+    - http:
+        path: users
+        method: POST
