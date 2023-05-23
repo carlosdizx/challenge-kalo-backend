@@ -6,7 +6,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
 
     if (typeof event.body === "string"){
-        const {name, email, password} = JSON.parse(event.body);
+        const {email, password} = JSON.parse(event.body);
 
        if (email.trim() === "")
             return responseObject(400, { message: "Email is required" });
