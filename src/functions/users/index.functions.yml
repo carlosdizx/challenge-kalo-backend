@@ -10,3 +10,9 @@ register-user:
     - http:
         path: users
         method: POST
+login-user:
+  handler: ${self:custom.prefix_module, 'src/functions/users/'}login.handler
+  events:
+    - http:
+        path: users/login
+        method: POST
