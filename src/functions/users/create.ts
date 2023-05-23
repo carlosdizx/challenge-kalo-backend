@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import {APIGatewayProxyHandler} from "aws-lambda";
 import responseObject from "../../utils/Response";
 import UsersAuthService from "../../services/users.auth.service";
