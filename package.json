@@ -1,0 +1,47 @@
+{
+  "name": "challenge-kalo",
+  "version": "1.0.0",
+  "description": "Challenge Kalo - Backend Engineer",
+  "scripts": {
+    "test": "echo \"No test specified\"",
+    "lambda:dev": "rimraf .build && serverless offline start --stage dev",
+    "deploy:dev": "rimraf .serverless && serverless deploy --stage dev --verbose",
+    "deploy:stage": "rimraf .serverless && serverless deploy --stage dev --verbose",
+    "format": "prettier --write \"src/**/**/*.ts\" \"test/**/**/*.ts\""
+  },
+  "author": "Carlos Ernesto Diaz Basante",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.332.0",
+    "@middy/core": "^4.2.5",
+    "@types/bcrypt": "^5.0.0",
+    "aws-sdk": "^2.1377.0",
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "pg": "^8.10.0",
+    "reflect-metadata": "^0.1.13",
+    "stream-buffers": "^3.0.2",
+    "typeorm": "^0.3.15",
+    "xlsx": "^0.18.5",
+    "xlsx-populate": "^1.21.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.114",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^16.18.25",
+    "@types/stream-buffers": "^3.0.4",
+    "@types/xlsx": "^0.0.36",
+    "esbuild": "^0.17.18",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
+    "serverless-esbuild": "^1.44.0",
+    "serverless-offline": "^12.0.4",
+    "typescript": "^5.0.4",
+    "xlsx-populate-types": "^1.21.1"
+  }
+}

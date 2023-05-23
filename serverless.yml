@@ -1,0 +1,28 @@
+service: cash-control
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+custom:
+  esbuild:
+    minify: true
+    external:
+      - aws-sdk
+      - dotenv
+      - pg
+      - reflect-metadata
+      - typeorm
+      - moment
+      - moment-timezone
+      - bcrypt
+      - jsonwebtoken
+    watch:
+      pattern: [ './index.ts', 'src/**/*.ts' ]
+      ignore: [ '.serverless/**/*', '.build' ]
+  env: ${file(./properties/properties.yaml)}
+
