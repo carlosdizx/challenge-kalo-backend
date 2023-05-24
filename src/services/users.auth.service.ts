@@ -13,6 +13,7 @@ export default class UsersAuthService {
             return responseObject(200, result);
         }
         catch (e) {
+            console.log(e);
             return responseObject(500, {
                 message: "Error creating user",
                 error: e,
@@ -27,8 +28,8 @@ export default class UsersAuthService {
                 const user: User = JSON.parse(result.body);
                 const userPlainObject = {
                     id: user.id,
-                    name: user.name,
-                    email: user.email
+                    email: user.email,
+                    type: user.type
                 };
                 const token = await generateToken(userPlainObject);
                 return responseObject(200, {email: user.email, token});
@@ -52,10 +53,9 @@ export default class UsersAuthService {
 
             const userPlainObject = {
                 id: userFound.id,
-                name: userFound.name,
-                email: userFound.email
+                email: userFound.email,
+                type: userFound.type
             };
-
             const token = await generateToken(userPlainObject);
             return responseObject(200, {email: userFound.email, token});
         }
