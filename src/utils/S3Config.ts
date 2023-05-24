@@ -20,3 +20,22 @@ export const upload = async ({Key, Body}: {Key: string, Body: Buffer }) =>
         throw e;
     }
 }
+
+export async function uploadBufferToS3(Key, Body, ContentType) {
+    console.time("Upload File");
+
+    const uploadCommand = new PutObjectCommand({
+        Bucket,
+        Key,
+        Body,
+        ContentType
+    });
+
+    try {
+        const response = await s3Client.send(uploadCommand);
+        console.timeEnd("Upload File");
+        return response;
+    } catch (e) {
+        throw e;
+    }
+}
