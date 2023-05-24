@@ -24,7 +24,5 @@ custom:
     watch:
       pattern: [ './index.ts', 'src/**/*.ts' ]
       ignore: [ '.serverless/**/*', '.build' ]
-  env: ${file(./properties/properties.yaml)}
-
 functions:
   - ${file(./src/functions/users/index.functions.yml)}
