@@ -1,4 +1,4 @@
-service: cash-control
+service: challenge-kalo
 
 provider:
   name: aws
