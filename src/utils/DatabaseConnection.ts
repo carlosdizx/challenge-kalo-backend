@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import dotenv = require("dotenv");
 import User from "../entities/User.entity";
+import Article from "../entities/Article.entity";
 dotenv.config();
 
 const dataSource =  new DataSource({
@@ -13,6 +14,7 @@ const dataSource =  new DataSource({
     synchronize: true,
     entities: [
         User,
+        Article
     ],
 })
 
