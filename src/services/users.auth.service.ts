@@ -25,7 +25,12 @@ export default class UsersAuthService {
             const result = await this.create(name, email, password, type);
             if (result.statusCode === 200) {
                 const user: User = JSON.parse(result.body);
-                const token = await generateToken(user);
+                const userPlainObject = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email
+                };
+                const token = await generateToken(userPlainObject);
                 return responseObject(200, {email: user.email, token});
             }else
                 return responseObject(500, result.body);
