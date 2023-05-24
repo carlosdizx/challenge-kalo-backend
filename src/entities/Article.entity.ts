@@ -1,17 +1,17 @@
-import {BaseEntity, Column, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import User from "./User.entity";
-
+@Entity({name: "articles"})
 export default class Article extends BaseEntity{
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column({name:"title", type: "varchar"})
     title: string;
 
-    @Column()
+    @Column({name:"body", type: "varchar"})
     body: string;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, name: "image", type: "varchar" })
     image: string;
 
     @ManyToOne(() => User, user => user.articles)
