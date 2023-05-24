@@ -1,0 +1,6 @@
+create-article:
+  handler: ${self:custom.prefix_module, 'src/functions/articles/'}create.handler
+  events:
+    - http:
+        path: articles
+        method: POST
