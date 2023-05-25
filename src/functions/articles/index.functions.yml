@@ -8,7 +8,7 @@ upload-image:
   handler: ${self:custom.prefix_module, 'src/functions/articles/'}upload-image.handler
   events:
     - http:
-        path: articles/upload
+        path: articles/upload/{id}
         method: PATCH
 find-article:
   handler: ${self:custom.prefix_module, 'src/functions/articles/'}find.handler

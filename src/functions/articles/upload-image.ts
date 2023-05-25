@@ -9,7 +9,7 @@ const allowedMimes = ['image/jpeg', 'image/png', 'image/jpg'];
 const originalHandler:APIGatewayProxyHandler  = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
     if(event.body){
-        const {id: articleId} = event.queryStringParameters;
+        const {id: articleId} = event.pathParameters;
         const userId = event.requestContext.authorizer.claims.id;
         const data = event.body.split("\r\n");
         const fileContType = data[2].split(":")[1].trim();
