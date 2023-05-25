@@ -10,7 +10,7 @@ export default class ArticlesCrudService {
         if(!user)
             return responseObject(409, {message: "You do not have permission!"});
         try {
-            const article = ArticleDao.create(title, body, user);
+            await ArticleDao.create(title, body, user);
             return responseObject(200, {message: "Article created"});
         }
         catch (e) {
