@@ -17,7 +17,7 @@ const originalHandler = async (event, context) => {
         const buffer = Buffer.from(fileContent, "binary");
         return await ArticlesCrudService.uploadFileByArticle({image: buffer, name: fileName, type: fileContType}, "", "");
     }
-    return responseObject(200, {message: 'Form data is required'});
+    return responseObject(400, {message: 'Form data is required'});
 };
 
 export const handler = middy()
