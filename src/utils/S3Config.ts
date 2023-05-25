@@ -1,4 +1,5 @@
 import {GetObjectCommand, PutObjectCommand, S3Client} from "@aws-sdk/client-s3";
+import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
 
 const Bucket = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;
@@ -30,7 +31,7 @@ export const getFileUrl = async (Key: string) => {
     });
 
     try {
-        return await s3Client.send(command);
+        return await getSignedUrl(s3Client, command);
     } catch (err) {
         console.error(err);
     }
