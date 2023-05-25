@@ -1,3 +1,9 @@
+create-article:
+  handler: ${self:custom.prefix_module, 'src/functions/articles/'}create.handler
+  events:
+    - http:
+        path: articles
+        method: POST
 upload-image:
   handler: ${self:custom.prefix_module, 'src/functions/articles/'}upload-image.handler
   events:
