@@ -8,5 +8,5 @@ upload-image:
   handler: ${self:custom.prefix_module, 'src/functions/articles/'}upload-image.handler
   events:
     - http:
-        path: articles/upload/:id
+        path: articles/upload
         method: PATCH
