@@ -1,4 +1,5 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import {GetObjectCommand, PutObjectCommand, S3Client} from "@aws-sdk/client-s3";
+
 const Bucket = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;
 const s3Client = new S3Client({ region });
@@ -21,3 +22,16 @@ export const upload = async ({Key, Body, ContentType}: {Key: string, Body: Buffe
         throw e;
     }
 }
+
+export const getFileUrl = async (Key: string) => {
+    const command = new GetObjectCommand({
+        Bucket,
+        Key
+    });
+
+    try {
+        return await s3Client.send(command);
+    } catch (err) {
+        console.error(err);
+    }
+};

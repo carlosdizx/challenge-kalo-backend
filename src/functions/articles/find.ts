@@ -9,10 +9,13 @@ const originalHandler: APIGatewayProxyHandler  = async (event, context) => {
     try {
         const {id: articleId} = event.pathParameters;
         const userId = event.requestContext.authorizer.claims.id;
-        return responseObject(200, {articleId, userId});
+        //d5299fd6-476f-4da2-8055-fb6e3f8270c9/addb724b-7ae5-4556-8168-f6b87e6ab401.png
+        const file = await getFileUrl("d5299fd6-476f-4da2-8055-fb6e3f8270c9/addb724b-7ae5-4556-8168-f6b87e6ab401.png");
+        return responseObject(200, file);
     }
     catch (err) {
-        return responseObject(500, "alv");
+        console.log(err);
+        return responseObject(500, `alv: ${err}`);
     }
 };
 
