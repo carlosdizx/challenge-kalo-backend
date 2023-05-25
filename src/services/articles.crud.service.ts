@@ -20,7 +20,8 @@ export default class ArticlesCrudService {
     public static uploadFileByArticle = async (
         {image, name, type}:{image: Buffer, name: string, type: string}, articleId: string, userId: string
     ) => {
-        const Key = `${userId}/${articleId}-${name}`;
+        const extension = name.split(".")[name.split(".").length -1];
+        const Key = `${userId}/${articleId}.${extension}`;
         try {
             const result = await upload({Key, Body: image, ContentType: type});
             return responseObject(200, result);
