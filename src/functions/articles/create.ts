@@ -9,9 +9,12 @@ const originalHandler = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
     if(event.body){
         const data = event.body.split("\r\n");
+        const fileContType = data[2].split(":")[1].trim();
+        if(!allowedMimes.includes(fileContType))
+            return responseObject(400, {message: "File is not a image!"})
         const fileName = data[1].split(";")[2].split("=")[1].replace(/^"|"$/g, '').trim();
         const fileContent = data[4].trim();
-        return responseObject(200, {message: 'Form data is required', fileName,fileContent});
+        return responseObject(200, {message: 'Successful!'});
     }
     return responseObject(200, {message: 'Form data is required'});
 };
