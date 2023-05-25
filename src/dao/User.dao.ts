@@ -16,4 +16,10 @@ export default class UserDao {
         const repository = datasource.getRepository(User);
         return await repository.findOne({ where: { email } });
     }
+
+    public static findById = async (id: string) => {
+        const datasource = await getConnect();
+        const repository = datasource.getRepository(User);
+        return await repository.findOne({ where: { id } });
+    }
 }
