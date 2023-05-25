@@ -1,4 +1,4 @@
-import {upload} from "../utils/S3Config";
+import {getFileUrl, upload} from "../utils/S3Config";
 import responseObject from "../utils/Response";
 import ArticleDao from "../dao/Article.dao";
 import UserDao from "../dao/User.dao";
@@ -21,8 +21,7 @@ export default class ArticlesCrudService {
         {image, name, type}:{image: Buffer, name: string, type: string}, articleId: string, userId: string
     ) => {
         const article = await ArticleDao.findById(articleId);
-        if(!article)
-            return responseObject(409, {message: "The article does not exist!"});
+        if(!article) return responseObject(409, {message: "The article does not exist!"});
         const extension = name.split(".")[name.split(".").length -1];
         const Key = `${userId}/${articleId}.${extension}`;
         try {
@@ -32,5 +31,20 @@ export default class ArticlesCrudService {
         catch (e) {
             return responseObject(500, "Error uploading image!");
         }
+    }
+
+    private static getUrlImage = async (key: string) => {
+        try {
+            return await getFileUrl(key);
+        }
+        catch (e) {
+            return null;
+        }
+    }
+
+    public static findArticleById = async (articleId: string, key: string) => {
+        const article = await ArticleDao.findById(articleId);
+        if(!article) return responseObject(409, {message: "The article does not exist!"});
+        return responseObject(200,article);
     }
 }
