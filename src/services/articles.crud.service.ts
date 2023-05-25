@@ -23,8 +23,8 @@ export default class ArticlesCrudService {
         const extension = name.split(".")[name.split(".").length -1];
         const Key = `${userId}/${articleId}.${extension}`;
         try {
-            const result = await upload({Key, Body: image, ContentType: type});
-            return responseObject(200, result);
+            await upload({Key, Body: image, ContentType: type});
+            return responseObject(200, {message: "Image upload correctly!"});
         }
         catch (e) {
             return responseObject(500, "Error uploading image!");
