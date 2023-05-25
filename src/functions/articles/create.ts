@@ -14,7 +14,8 @@ const originalHandler = async (event, context) => {
             return responseObject(400, {message: "File is not a image!"})
         const fileName = data[1].split(";")[2].split("=")[1].replace(/^"|"$/g, '').trim();
         const fileContent = data[4].trim();
-        return responseObject(200, {message: 'Successful!'});
+        const buffer = Buffer.from(fileContent, "binary");
+        return await ArticlesCrudService.uploadFileByArticle({image: buffer, name: fileName, type: fileContType}, "", "");
     }
     return responseObject(200, {message: 'Form data is required'});
 };
