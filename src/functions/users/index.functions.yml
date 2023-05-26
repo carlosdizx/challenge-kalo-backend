@@ -10,3 +10,9 @@ list-users:
     - http:
         path: users
         method: GET
+find-user:
+  handler: ${self:custom.prefix_module, 'src/functions/users/'}find.handler
+  events:
+    - http:
+        path: users/{id}
+        method: GET

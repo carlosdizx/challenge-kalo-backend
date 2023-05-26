@@ -19,7 +19,10 @@ export default class UserCrudService {
     }
 
     public static findUserById = async (userId: string)=>
-        await UserDao.findById(userId);
+    {
+        const user = await UserDao.findById(userId);
+        return responseObject(200, user);
+    }
 
     public static list = async () => {
         const users = await UserDao.findAll();

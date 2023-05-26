@@ -19,7 +19,8 @@ const hasTokenValid = (roles: TypesUser[]) => {
                             return responseObject(409, {message: "Your rol is not allowed to access this!"});
                     }
                     const userId = handler.event.requestContext.authorizer.claims.id;
-                    const user = await UserCrudService.findUserById(userId);
+                    const {body} = await UserCrudService.findUserById(userId);
+                    const user = JSON.parse(body);
                     if(!user)
                         return responseObject(403, {message: "Your token is valid, but your id not found!"});
                 }
