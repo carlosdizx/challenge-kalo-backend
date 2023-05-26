@@ -45,8 +45,9 @@ export default class UserCrudService {
         const response = await this.findUserById(userId);
         if(response.statusCode === 200){
             const user : User = JSON.parse(response.body);
+            const hashedPassword = await encryptPassword(password);
             try {
-                const result = await UserDao.update(name, email, password, userId);
+                const result = await UserDao.update(name, email, hashedPassword, userId);
                 if(result)
                     return responseObject(200, {message: "User updated", email: result.email, id: user.id, type: result.type});
                 return responseObject(409, {message:"User not updated, email already in use"})
