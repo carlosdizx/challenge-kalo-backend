@@ -35,8 +35,8 @@ export default class UserCrudService {
     public static list = async () => {
         const users = await UserDao.findAll();
         const usersMap: any[] = [];
-        for (const user of users) {
-            usersMap.push({id: user.id, email: user.email});
+        for (const {id, email, type} of users) {
+            usersMap.push({id, email, type});
         }
         return responseObject(200, usersMap);
     }
