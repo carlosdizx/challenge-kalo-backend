@@ -43,4 +43,11 @@ export default class UserDao {
         return await repository.save(user);
     }
 
+    public static deleteUserAndArticles = async (userId: string) => {
+        const datasource = await getConnect();
+        const userRepository = datasource.getRepository(User);
+        const deleteResult = await userRepository.delete(userId);
+        return deleteResult.affected !== 0;
+    }
+
 }

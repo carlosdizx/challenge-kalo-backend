@@ -3,6 +3,7 @@ import {encryptPassword} from "../utils/bcryptUtils";
 import UserDao from "../dao/User.dao";
 import responseObject from "../utils/Response";
 import User from "../entities/User.entity";
+import ArticleDao from "../dao/Article.dao";
 
 export default class UserCrudService {
     public static create = async (name: string, email: string, password: string, type: TypesUser = TypesUser.USER) => {
@@ -58,5 +59,13 @@ export default class UserCrudService {
         }
         else
             return response;
+    }
+
+    public static deleteById = async(userId: string) => {
+        await ArticleDao.deleteAllByUserId(userId);
+        const isDeleted = await UserDao.deleteUserAndArticles(userId);
+        if(isDeleted)
+            return responseObject(200, {message: "User deleted"});
+        return responseObject(500, {message: "User is not deleted"});
     }
 }
