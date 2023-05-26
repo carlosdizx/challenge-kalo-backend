@@ -2,6 +2,7 @@ import {TypesUser} from "../Enums/typesUser";
 import {encryptPassword} from "../utils/bcryptUtils";
 import UserDao from "../dao/User.dao";
 import responseObject from "../utils/Response";
+import User from "../entities/User.entity";
 
 export default class UserCrudService {
     public static create = async (name: string, email: string, password: string, type: TypesUser = TypesUser.USER) => {
@@ -38,5 +39,21 @@ export default class UserCrudService {
             usersMap.push({id: user.id, email: user.email});
         }
         return responseObject(200, usersMap);
+    }
+
+    public static update = async (userId: string)=> {
+        const response = await this.findUserById(userId);
+        if(response.statusCode === 200){
+            const user : User = JSON.parse(response.body);
+            try {
+                const result =await UserDao.update(userId, user);
+                return responseObject(200, {message: "User created", email: result.email, id: user.id, type: result.type});
+            }
+            catch (e){
+                responseObject(500, {message:"User not updated!"})
+            }
+        }
+        else
+            return response;
     }
 }

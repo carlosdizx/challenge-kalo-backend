@@ -16,3 +16,9 @@ find-user:
     - http:
         path: users/{id}
         method: GET
+update-user:
+  handler: ${self:custom.prefix_module, 'src/functions/users/'}update.handler
+  events:
+    - http:
+        path: users/{id}
+        method: PUT

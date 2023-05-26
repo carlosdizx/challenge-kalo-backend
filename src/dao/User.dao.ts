@@ -28,4 +28,15 @@ export default class UserDao {
         const repository = datasource.getRepository(User);
         return repository.find();
     }
+
+    public static update = async (id: string, updatedData: Partial<User>) => {
+        const datasource = await getConnect();
+        const repository = datasource.getRepository(User);
+        const user = await repository.findOne({where: {id}});
+        if (!user) {
+            throw new Error("User not found");
+        }
+        Object.assign(user, updatedData);
+        return await repository.save(user);
+    }
 }
