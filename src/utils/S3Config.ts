@@ -1,4 +1,4 @@
-import {GetObjectCommand, PutObjectCommand, S3Client} from "@aws-sdk/client-s3";
+import {GetObjectCommand, PutObjectCommand, S3Client, HeadObjectCommand } from "@aws-sdk/client-s3";
 import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
 
 const Bucket = process.env.AWS_BUCKET_NAME;
@@ -25,14 +25,19 @@ export const upload = async ({Key, Body, ContentType}: {Key: string, Body: Buffe
 }
 
 export const getFileUrl = async (Key: string) => {
-    const command = new GetObjectCommand({
+    const command = new HeadObjectCommand({
         Bucket,
         Key
     });
 
     try {
-        return await getSignedUrl(s3Client, command);
-    } catch (err) {
-        console.error(err);
+        await s3Client.send(command);
+        return await getSignedUrl(s3Client, new GetObjectCommand({ Bucket, Key }));
+    } catch (e) {
+        console.log(e);
+        if (e.name === "NotFound") {
+            throw new Error("El objeto no existe.");
+        }
+        throw e;
     }
 };
