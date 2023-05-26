@@ -1,0 +1,12 @@
+register-user:
+  handler: ${self:custom.prefix_module, 'src/functions/auth/'}register.handler
+  events:
+    - http:
+        path: auth
+        method: POST
+login-user:
+  handler: ${self:custom.prefix_module, 'src/functions/auth/'}login.handler
+  events:
+    - http:
+        path: auth/login
+        method: POST
