@@ -22,4 +22,14 @@ export default class ArticleDao {
         const repository = datasource.getRepository(Article);
         return await repository.find({ where: { user: { id: userId } } });
     }
+
+    public static deleteAllByUserId = async (userId: string) => {
+        const datasource = await getConnect();
+        const repository = datasource.getRepository(Article);
+        const articles = await this.findAllByUserId(userId);
+        for (const article of articles) {
+            await repository.remove(article);
+        }
+        return true;
+    }
 }
