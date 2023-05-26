@@ -7,6 +7,15 @@ const hasTokenValid = (roles: TypesUser[]) => {
         before: async (handler) => {
             console.log('MIDDLEWARE: Starting hasTokenValid method');
             handler.context.callbackWaitsForEmptyEventLoop = false;
+
+            const userId = handler.event.requestContext.authorizer.jwt.claims.id;
+            const {statusCode, body} = await UserCrudService.findUserById(userId);
+            if(statusCode === 404)
+                return responseObject(403, {message: "Your id is not present in database!"});
+            else if(statusCode === 409)
+                return responseObject(403, JSON.parse(body));
+            const user = JSON.parse(body);
+
             const headers = handler.event.headers;
             const {authorization} = headers;
             const token = authorization && authorization.split(" ")[1];
@@ -14,16 +23,10 @@ const hasTokenValid = (roles: TypesUser[]) => {
                 try {
                     const valid: any = verifyToken(token);
                     if(roles.length > 0){
-                        const roleIsValid = roles.includes(valid.type);
+                        const roleIsValid = roles.includes(user.type);
                         if(!roleIsValid)
                             return responseObject(409, {message: "Your rol is not allowed to access this!"});
                     }
-                    const userId = handler.event.requestContext.authorizer.jwt.claims.id;
-                    const {statusCode, body} = await UserCrudService.findUserById(userId);
-                    if(statusCode === 404)
-                        return responseObject(403, {message: "Your id is not present in database!"});
-                    else if(statusCode === 409)
-                        return responseObject(403, JSON.parse(body));
                 }
                 catch (err) {
                     return responseObject(409, {message: "Your token is invalid!"});
