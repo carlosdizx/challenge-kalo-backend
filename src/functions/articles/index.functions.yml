@@ -16,3 +16,9 @@ find-article:
     - http:
         path: articles/{id}
         method: GET
+find-all:
+  handler: ${self:custom.prefix_module, 'src/functions/articles/'}find-all.handler
+  events:
+    - http:
+        path: articles
+        method: GET
