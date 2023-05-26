@@ -26,4 +26,5 @@ custom:
       ignore: [ '.serverless/**/*', '.build' ]
 functions:
   - ${file(./src/functions/auth/index.functions.yml)}
+  - ${file(./src/functions/users/index.functions.yml)}
   - ${file(./src/functions/articles/index.functions.yml)}

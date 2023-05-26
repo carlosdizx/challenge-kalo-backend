@@ -1,0 +1,6 @@
+create-user:
+  handler: ${self:custom.prefix_module, 'src/functions/users/'}create.handler
+  events:
+    - http:
+        path: users
+        method: POST
