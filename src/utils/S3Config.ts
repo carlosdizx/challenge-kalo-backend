@@ -34,10 +34,6 @@ export const getFileUrl = async (Key: string) => {
         await s3Client.send(command);
         return await getSignedUrl(s3Client, new GetObjectCommand({ Bucket, Key }));
     } catch (e) {
-        console.log(e);
-        if (e.name === "NotFound") {
-            throw new Error("El objeto no existe.");
-        }
         throw e;
     }
 };
