@@ -8,8 +8,8 @@ const hasTokenValid = (roles: TypesUser[]) => {
             console.log('MIDDLEWARE: Starting hasTokenValid method');
             handler.context.callbackWaitsForEmptyEventLoop = false;
             const headers = handler.event.headers;
-            const {Authorization} = headers;
-            const token = Authorization && Authorization.split(" ")[1];
+            const {authorization} = headers;
+            const token = authorization && authorization.split(" ")[1];
             if(token){
                 try {
                     const valid: any = verifyToken(token);
@@ -18,7 +18,7 @@ const hasTokenValid = (roles: TypesUser[]) => {
                         if(!roleIsValid)
                             return responseObject(409, {message: "Your rol is not allowed to access this!"});
                     }
-                    const userId = handler.event.requestContext.authorizer.claims.id;
+                    const userId = handler.event.requestContext.authorizer.jwt.claims.id;
                     const {statusCode, body} = await UserCrudService.findUserById(userId);
                     if(statusCode === 404)
                         return responseObject(403, {message: "Your id is not present in database!"});

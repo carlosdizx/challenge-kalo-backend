@@ -7,7 +7,7 @@ import ArticlesCrudService from "../../services/articles.crud.service";
 const originalHandler: APIGatewayProxyHandler  = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
     if(typeof event.body === "string") {
-        const userId = event.requestContext.authorizer.claims.id;
+        const userId = event.requestContext.authorizer.jwt.claims.id;
         const {title, body} = JSON.parse(event.body);
         return await ArticlesCrudService.createArticle({title, body}, userId);
     }

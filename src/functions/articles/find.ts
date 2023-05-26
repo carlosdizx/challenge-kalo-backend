@@ -8,7 +8,7 @@ const originalHandler: APIGatewayProxyHandler  = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
     try {
         const {id: articleId} = event.pathParameters;
-        const userId = event.requestContext.authorizer.claims.id;
+        const userId = event.requestContext.authorizer.jwt.claims.id;
         const key = `${userId}/${articleId}`;
         return await ArticlesCrudService.findArticleById(articleId, key);
     }
