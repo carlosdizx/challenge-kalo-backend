@@ -5,12 +5,12 @@ import Article from "../entities/Article.entity";
 dotenv.config();
 
 const dataSource =  new DataSource({
-    type: "postgres",
-    host: process.env.DB_POSTGRES_HOST,
-    port: parseInt(`${process.env.DB_POSTGRES_PORT}`),
-    username: process.env.DB_POSTGRES_USER,
-    password: process.env.DB_POSTGRES_PASSWORD,
-    database: process.env.DB_POSTGRES_DATABASE,
+    type: "mysql",
+    host: process.env.DB_MYSQL_HOST,
+    port: parseInt(`${process.env.DB_MYSQL_PORT}`),
+    username: process.env.DB_MYSQL_USER,
+    password: process.env.DB_MYSQL_PASSWORD,
+    database: process.env.DB_MYSQL_DATABASE,
     synchronize: true,
     entities: [
         User,
