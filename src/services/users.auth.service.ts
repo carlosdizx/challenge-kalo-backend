@@ -8,7 +8,11 @@ import {TypesUser} from "../Enums/typesUser";
 export default class UsersAuthService {
     public static create = async (name: string, email: string, password: string, type: TypesUser = TypesUser.USER) => {
         const hashedPassword = await encryptPassword(password);
+        const userFound = await UserDao.findByEmail(email);
+        if(userFound)
+            return responseObject(409, {message: "User already exists"});
         try {
+
             const result = await UserDao.create(name, email, hashedPassword, type);
             return responseObject(200, result);
         }
@@ -30,7 +34,7 @@ export default class UsersAuthService {
                 const token = await generateToken(userPlainObject);
                 return responseObject(200, {email: user.email, token});
             }else
-                return responseObject(500, result.body);
+                return responseObject(result.statusCode, JSON.parse(result.body));
         }
         catch (e) {
             return responseObject(500, {
