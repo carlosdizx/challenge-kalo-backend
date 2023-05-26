@@ -20,8 +20,15 @@ export default class UserCrudService {
 
     public static findUserById = async (userId: string)=>
     {
-        const user = await UserDao.findById(userId);
-        return responseObject(200, user);
+        try {
+            const user = await UserDao.findById(userId);
+            if(user)
+                return responseObject(200, {...user, password: undefined});
+            return responseObject(404, {message: "User not found!"});
+        }
+        catch (e) {
+            return responseObject(409, {message: `User not found, check your id is valid: ${userId}`});
+        }
     }
 
     public static list = async () => {

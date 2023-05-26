@@ -19,10 +19,11 @@ const hasTokenValid = (roles: TypesUser[]) => {
                             return responseObject(409, {message: "Your rol is not allowed to access this!"});
                     }
                     const userId = handler.event.requestContext.authorizer.claims.id;
-                    const {body} = await UserCrudService.findUserById(userId);
-                    const user = JSON.parse(body);
-                    if(!user)
-                        return responseObject(403, {message: "Your token is valid, but your id not found!"});
+                    const {statusCode, body} = await UserCrudService.findUserById(userId);
+                    if(statusCode === 404)
+                        return responseObject(403, {message: "Your id is not present in database!"});
+                    else if(statusCode === 409)
+                        return responseObject(403, JSON.parse(body));
                 }
                 catch (err) {
                     return responseObject(409, {message: "Your token is invalid!"});
