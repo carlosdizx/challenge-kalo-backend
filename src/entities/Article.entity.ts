@@ -1,4 +1,4 @@
-import {BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, JoinColumn} from "typeorm";
 import User from "./User.entity";
 @Entity({name: "articles"})
 export default class Article extends BaseEntity{
@@ -12,5 +12,6 @@ export default class Article extends BaseEntity{
     body: string;
 
     @ManyToOne(() => User, user => user.articles)
+    @JoinColumn({name: "user_id"})
     user: User;
 }
