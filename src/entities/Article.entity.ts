@@ -11,9 +11,6 @@ export default class Article extends BaseEntity{
     @Column({name:"body", type: "varchar"})
     body: string;
 
-    @Column({ nullable: true, name: "image", type: "varchar" })
-    image: string;
-
     @ManyToOne(() => User, user => user.articles)
     user: User;
 }

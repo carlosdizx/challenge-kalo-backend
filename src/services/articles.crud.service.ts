@@ -26,8 +26,6 @@ export default class ArticlesCrudService {
         const Key = `${userId}/${articleId}.${extension}`;
         try {
             await upload({Key, Body: image, ContentType: type});
-            const imageUrl = await ArticlesCrudService.getUrlImage(Key);
-            await ArticleDao.updateImage(articleId, imageUrl);
             return responseObject(200, {message: "Image upload correctly!"});
         }
         catch (e) {
@@ -47,6 +45,7 @@ export default class ArticlesCrudService {
     public static findArticleById = async (articleId: string, key: string) => {
         const article = await ArticleDao.findById(articleId);
         if(!article) return responseObject(409, {message: "The article does not exist!"});
-        return responseObject(200,article);
+        const image = await ArticlesCrudService.getUrlImage(key);
+        return responseObject(200, {...article, image});
     }
 }

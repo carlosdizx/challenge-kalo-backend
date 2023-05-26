@@ -16,12 +16,4 @@ export default class ArticleDao {
         const repository = datasource.getRepository(Article);
         return await repository.findOne({ where: { id } });
     }
-
-    public static updateImage = async (id: string, imageUrl: string) => {
-        const datasource = await getConnect();
-        const repository = datasource.getRepository(Article);
-        const article = await repository.findOne({ where: { id } });
-        article.image = imageUrl;
-        return await repository.save(article);
-    }
 }
