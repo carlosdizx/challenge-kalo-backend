@@ -16,4 +16,10 @@ export default class ArticleDao {
         const repository = datasource.getRepository(Article);
         return await repository.findOne({ where: { id } });
     }
+
+    public static findAllByUserId = async (userId: string) => {
+        const datasource = await getConnect();
+        const repository = datasource.getRepository(Article);
+        return await repository.find({ where: { user: { id: userId } } });
+    }
 }

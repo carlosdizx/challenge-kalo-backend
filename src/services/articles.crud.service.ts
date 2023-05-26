@@ -48,4 +48,9 @@ export default class ArticlesCrudService {
         const image = await ArticlesCrudService.getUrlImage(key);
         return responseObject(200, {...article, image});
     }
+
+    public static findAllArticles = async (userId: string) => {
+        const articles = await ArticleDao.findAllByUserId(userId);
+        return responseObject(200, articles);
+    }
 }
