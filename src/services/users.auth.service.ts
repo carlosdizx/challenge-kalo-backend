@@ -7,9 +7,9 @@ import {TypesUser} from "../Enums/typesUser";
 import UserCrudService from "./user.crud.service";
 
 export default class UsersAuthService {
-    public static registerUser = async ({name, email, password, type}: {name: string, email: string, password: string, type: TypesUser}) => {
+    public static registerUser = async ({name, email, password}: {name: string, email: string, password: string}) => {
         try {
-            const result = await UserCrudService.create(name, email, password, type);
+            const result = await UserCrudService.create(name, email, password);
             if (result.statusCode === 200) {
                 const user: User = JSON.parse(result.body);
                 const userPlainObject = {
