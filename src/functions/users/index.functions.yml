@@ -22,3 +22,9 @@ update-user:
     - httpApi:
         path: /users/{id}
         method: PUT
+delete-user:
+  handler: ${self:custom.prefix_module, 'src/functions/users/'}delete.handler
+  events:
+    - httpApi:
+        path: /users/{id}
+        method: DELETE
