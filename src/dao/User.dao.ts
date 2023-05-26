@@ -29,14 +29,18 @@ export default class UserDao {
         return repository.find();
     }
 
-    public static update = async (id: string, updatedData: Partial<User>) => {
+    public static update = async (name: string, email: string, password: string, id: string,) => {
         const datasource = await getConnect();
         const repository = datasource.getRepository(User);
-        const user = await repository.findOne({where: {id}});
-        if (!user) {
-            throw new Error("User not found");
-        }
-        Object.assign(user, updatedData);
+        const user = await this.findById(id);
+        const userEmail = await this.findByEmail(email);
+
+        if (userEmail && userEmail.id !== user.id)
+            return null;
+        user.name = name;
+        user.email = email;
+        user.password = password;
         return await repository.save(user);
     }
+
 }

@@ -16,6 +16,7 @@
     "@aws-sdk/client-s3": "^3.332.0",
     "@aws-sdk/s3-request-presigner": "^3.338.0",
     "@middy/core": "^4.2.5",
+    "@middy/http-json-body-parser": "^4.4.3",
     "@middy/http-multipart-body-parser": "^4.4.3",
     "aws-sdk": "^2.1377.0",
     "bcrypt": "^5.1.0",

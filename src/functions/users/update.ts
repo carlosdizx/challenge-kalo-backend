@@ -1,7 +1,7 @@
 import middy from "@middy/core";
 import hasTokenValid from "../../middleware/hasTokenValid";
 import {parseTypeUser, TypesUser} from "../../Enums/typesUser";
-import httpMultipartBodyParser from '@middy/http-multipart-body-parser'
+import httpJsonBodyParser from '@middy/http-json-body-parser';
 import UserCrudService from "../../services/user.crud.service";
 import responseObject from "../../utils/Response";
 
@@ -22,9 +22,10 @@ const originalHandler = async (event, context) => {
         return responseObject(400, { message: "Password is required" });
     if(typeUserFound === null || (typeUserFound === TypesUser.USER && idSend !== userId))
         return responseObject(403, { message: "You have not permissions" });
-    return await UserCrudService.update(idSend);
+    return await UserCrudService.update({name, email, password}, idSend);
 };
 
-export const handler = middy(originalHandler)
+export const handler = middy()
     .use(hasTokenValid([TypesUser.ADMIN, TypesUser.USER]))
-    .use(httpMultipartBodyParser());
+    .use(httpJsonBodyParser())
+    .handler(originalHandler);

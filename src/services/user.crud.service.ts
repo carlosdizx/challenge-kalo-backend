@@ -41,13 +41,15 @@ export default class UserCrudService {
         return responseObject(200, usersMap);
     }
 
-    public static update = async (userId: string)=> {
+    public static update = async ({name, email, password}:{name: string, email: string, password: string},userId: string)=> {
         const response = await this.findUserById(userId);
         if(response.statusCode === 200){
             const user : User = JSON.parse(response.body);
             try {
-                const result =await UserDao.update(userId, user);
-                return responseObject(200, {message: "User created", email: result.email, id: user.id, type: result.type});
+                const result = await UserDao.update(name, email, password, userId);
+                if(result)
+                    return responseObject(200, {message: "User updated", email: result.email, id: user.id, type: result.type});
+                return responseObject(409, {message:"User not updated, email already in use"})
             }
             catch (e){
                 responseObject(500, {message:"User not updated!"})
