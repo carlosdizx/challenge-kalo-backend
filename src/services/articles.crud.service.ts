@@ -26,6 +26,8 @@ export default class ArticlesCrudService {
         const Key = `${userId}/${articleId}.${extension}`;
         try {
             await upload({Key, Body: image, ContentType: type});
+            const imageUrl = await ArticlesCrudService.getUrlImage(Key);
+            await ArticleDao.updateImage(articleId, imageUrl);
             return responseObject(200, {message: "Image upload correctly!"});
         }
         catch (e) {
