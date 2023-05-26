@@ -2,6 +2,7 @@ import {getFileUrl, upload} from "../utils/S3Config";
 import responseObject from "../utils/Response";
 import ArticleDao from "../dao/Article.dao";
 import UserDao from "../dao/User.dao";
+import Article from "../entities/Article.entity";
 
 export default class ArticlesCrudService {
 
@@ -23,7 +24,7 @@ export default class ArticlesCrudService {
         const article = await ArticleDao.findById(articleId);
         if(!article) return responseObject(409, {message: "The article does not exist!"});
         const extension = name.split(".")[name.split(".").length -1];
-        const Key = `${userId}/${articleId}.${extension}`;
+        const Key = `${userId}/${articleId}`;
         try {
             await upload({Key, Body: image, ContentType: type});
             return responseObject(200, {message: "Image upload correctly!"});
@@ -38,7 +39,7 @@ export default class ArticlesCrudService {
             return await getFileUrl(key);
         }
         catch (e) {
-            return null;
+            return undefined;
         }
     }
 
@@ -51,6 +52,14 @@ export default class ArticlesCrudService {
 
     public static findAllArticles = async (userId: string) => {
         const articles = await ArticleDao.findAllByUserId(userId);
-        return responseObject(200, articles);
+        const articlesMap: any[] = [];
+
+        for (const article of articles) {
+            const key = `${userId}/${article.id}`;
+            const image = await ArticlesCrudService.getUrlImage(key);
+            articlesMap.push({...article, image})
+        }
+
+        return responseObject(200, articlesMap);
     }
 }
