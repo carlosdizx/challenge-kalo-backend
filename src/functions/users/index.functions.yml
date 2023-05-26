@@ -4,3 +4,9 @@ create-user:
     - http:
         path: users
         method: POST
+list-users:
+  handler: ${self:custom.prefix_module, 'src/functions/users/'}list.handler
+  events:
+    - http:
+        path: users
+        method: GET

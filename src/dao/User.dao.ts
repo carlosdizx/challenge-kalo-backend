@@ -22,4 +22,10 @@ export default class UserDao {
         const repository = datasource.getRepository(User);
         return await repository.findOne({ where: { id } });
     }
+
+    public static findAll = async ()=>{
+        const datasource = await getConnect();
+        const repository = datasource.getRepository(User);
+        return repository.find();
+    }
 }
