@@ -2,7 +2,6 @@ import {getFileUrl, upload} from "../utils/S3Config";
 import responseObject from "../utils/Response";
 import ArticleDao from "../dao/Article.dao";
 import UserDao from "../dao/User.dao";
-import Article from "../entities/Article.entity";
 
 export default class ArticlesCrudService {
 
@@ -23,7 +22,6 @@ export default class ArticlesCrudService {
     ) => {
         const article = await ArticleDao.findById(articleId);
         if(!article) return responseObject(409, {message: "The article does not exist!"});
-        const extension = name.split(".")[name.split(".").length -1];
         const Key = `${userId}/${articleId}`;
         try {
             await upload({Key, Body: image, ContentType: type});
