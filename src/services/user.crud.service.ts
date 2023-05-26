@@ -17,4 +17,7 @@ export default class UserCrudService {
             return responseObject(500, {message: "Error creating user"});
         }
     }
+
+    public static findUserById = async (userId: string)=>
+        await UserDao.findById(userId);
 }
