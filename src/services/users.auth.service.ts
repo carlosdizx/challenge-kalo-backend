@@ -3,7 +3,6 @@ import responseObject from "../utils/Response";
 import {generateToken} from '../utils/AuthUtils';
 import {validatePassword} from '../utils/bcryptUtils';
 import UserDao from "../dao/User.dao";
-import {TypesUser} from "../Enums/typesUser";
 import UserCrudService from "./user.crud.service";
 
 export default class UsersAuthService {

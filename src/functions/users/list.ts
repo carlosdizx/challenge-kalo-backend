@@ -1,5 +1,4 @@
 import {APIGatewayProxyHandler} from "aws-lambda";
-import responseObject from "../../utils/Response";
 import middy from "@middy/core";
 import hasTokenValid from "../../middleware/hasTokenValid";
 import {TypesUser} from "../../Enums/typesUser";
