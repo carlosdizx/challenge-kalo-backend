@@ -12,9 +12,8 @@ export default class UsersAuthService {
         if(userFound)
             return responseObject(409, {message: "User already exists"});
         try {
-
-            const result = await UserDao.create(name, email, hashedPassword, type);
-            return responseObject(200, result);
+            await UserDao.create(name, email, hashedPassword, type);
+            return responseObject(200, {message: "User created", email});
         }
         catch (e) {
             return responseObject(500, {message: "Error creating user"});

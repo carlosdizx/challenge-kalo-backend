@@ -19,9 +19,7 @@ const originalHandler: APIGatewayProxyHandler = async (event, context) => {
         else if (password.trim() === "")
             return responseObject(400, { message: "Password is required" });
 
-        const {body} = await UsersAuthService.create(name, email, password);
-        const user: User = JSON.parse(body);
-        return responseObject(200, {message: `User created: ${user.email}`});
+        return await UsersAuthService.create(name, email, password);
     }
     return responseObject(400, {message: "Body is required"});
 };
