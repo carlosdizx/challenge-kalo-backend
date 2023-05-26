@@ -1,28 +1,15 @@
 import User from "../entities/User.entity";
 import responseObject from "../utils/Response";
 import {generateToken} from '../utils/AuthUtils';
-import {encryptPassword, validatePassword} from '../utils/bcryptUtils';
+import {validatePassword} from '../utils/bcryptUtils';
 import UserDao from "../dao/User.dao";
 import {TypesUser} from "../Enums/typesUser";
+import UserCrudService from "./user.crud.service";
 
 export default class UsersAuthService {
-    public static create = async (name: string, email: string, password: string, type: TypesUser = TypesUser.USER) => {
-        const hashedPassword = await encryptPassword(password);
-        const userFound = await UserDao.findByEmail(email);
-        if(userFound)
-            return responseObject(409, {message: "User already exists"});
-        try {
-            await UserDao.create(name, email, hashedPassword, type);
-            return responseObject(200, {message: "User created", email});
-        }
-        catch (e) {
-            return responseObject(500, {message: "Error creating user"});
-        }
-    }
-
     public static registerUser = async ({name, email, password, type}: {name: string, email: string, password: string, type: TypesUser}) => {
         try {
-            const result = await this.create(name, email, password, type);
+            const result = await UserCrudService.create(name, email, password, type);
             if (result.statusCode === 200) {
                 const user: User = JSON.parse(result.body);
                 const userPlainObject = {

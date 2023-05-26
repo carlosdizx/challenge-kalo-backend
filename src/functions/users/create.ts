@@ -1,9 +1,9 @@
 import {APIGatewayProxyHandler} from "aws-lambda";
 import responseObject from "../../utils/Response";
-import UsersAuthService from "../../services/users.auth.service";
 import middy from "@middy/core";
 import hasTokenValid from "../../middleware/hasTokenValid";
 import {TypesUser} from "../../Enums/typesUser";
+import UserCrudService from "../../services/user.crud.service";
 
 const originalHandler: APIGatewayProxyHandler = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
@@ -18,7 +18,7 @@ const originalHandler: APIGatewayProxyHandler = async (event, context) => {
         else if (password.trim() === "")
             return responseObject(400, { message: "Password is required" });
 
-        return await UsersAuthService.create(name, email, password);
+        return await UserCrudService.create(name, email, password);
     }
     return responseObject(400, {message: "Body is required"});
 };
