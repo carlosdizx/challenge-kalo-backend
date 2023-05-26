@@ -27,4 +27,4 @@ const originalHandler: APIGatewayProxyHandler = async (event, context) => {
 };
 
 export const handler = middy(originalHandler)
-    .use(hasTokenValid([TypesUser.ADMIN, TypesUser.ENTERPRISE]));
+    .use(hasTokenValid([TypesUser.ADMIN]));

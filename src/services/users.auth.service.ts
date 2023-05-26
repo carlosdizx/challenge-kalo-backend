@@ -13,11 +13,7 @@ export default class UsersAuthService {
             return responseObject(200, result);
         }
         catch (e) {
-            console.log(e);
-            return responseObject(500, {
-                message: "Error creating user",
-                error: e,
-            });
+            return responseObject(500, {message: "Error creating user"});
         }
     }
 
