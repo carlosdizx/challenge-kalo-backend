@@ -24,7 +24,8 @@ const hasTokenValid = (roles: TypesUser[]) => {
                     const valid: any = verifyToken(token);
                     if(roles.length > 0){
                         const roleIsValid = roles.includes(user.type);
-                        if(!roleIsValid)
+                        const roleFindIsValid = roles.includes(valid.type);
+                        if(!roleIsValid || !roleFindIsValid)
                             return responseObject(409, {message: "Your rol is not allowed to access this!"});
                     }
                 }
