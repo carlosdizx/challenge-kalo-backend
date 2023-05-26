@@ -10,8 +10,8 @@ export default class UserCrudService {
         if(userFound)
             return responseObject(409, {message: "User already exists"});
         try {
-            await UserDao.create(name, email, hashedPassword, type);
-            return responseObject(200, {message: "User created", email});
+            const user = await UserDao.create(name, email, hashedPassword, type);
+            return responseObject(200, {message: "User created", email, id: user.id, type});
         }
         catch (e) {
             return responseObject(500, {message: "Error creating user"});
