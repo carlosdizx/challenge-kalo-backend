@@ -7,7 +7,8 @@
     "lambda:dev": "rimraf .build && serverless offline start --stage dev",
     "deploy:dev": "rimraf .serverless && serverless deploy --stage dev --verbose",
     "deploy:stage": "rimraf .serverless && serverless deploy --stage dev --verbose",
-    "format": "prettier --write \"src/**/**/*.ts\" \"test/**/**/*.ts\""
+    "format": "prettier --write \"src/**/**/*.ts\" \"test/**/**/*.ts\"",
+    "install:database": "docker-compose down -v && rimraf .\\mysql-data\\ && docker-compose up -d"
   },
   "author": "Carlos Ernesto Diaz Basante",
   "license": "ISC",
