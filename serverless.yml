@@ -74,3 +74,4 @@ custom:
     path: env.yml
 functions:
   - ${file(./src/functions/auth/index.functions.yml)}
+  - ${file(./src/functions/ping/index.functions.yml)}

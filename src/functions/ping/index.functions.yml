@@ -1,0 +1,12 @@
+ping-database:
+  handler: ${self:custom.prefix_module, 'src/functions/ping/'}database.handler
+  events:
+    - httpApi:
+        path: /ping/database
+        method: GET
+#ping-data:
+#  handler: ${self:custom.prefix_module, 'src/functions/ping/'}register.handler
+#  events:
+#    - httpApi:
+#        path: /ping/data
+#        method: POST
