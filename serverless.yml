@@ -1,14 +1,9 @@
-service: challenge-backend-kalo
+service: challenge-back-kalo
 
 provider:
   name: aws
   runtime: nodejs16.x
-  timeout: 120
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - rds-db:connect
-      Resource: arn:aws:rds:us-east-1:184440761998:db:database-1
+  timeout: 300
   iam:
     role:
       statements:
@@ -28,11 +23,11 @@ provider:
 
 resources:
   Resources:
-    MyDatabase:
+    challengeKaloBackDB:
       Type: AWS::RDS::DBInstance
       Properties:
         Engine: mysql
-        DBInstanceIdentifier: database-1
+        DBInstanceIdentifier: challenge-kalo-database
         MasterUsername: admin
         MasterUserPassword: rootroot
         AllocatedStorage: 20
@@ -41,12 +36,12 @@ resources:
           - sg-0afb89b491edc972a
         AvailabilityZone: us-east-1a
         MultiAZ: false
-        PubliclyAccessible: true
+        PubliclyAccessible: false
         StorageType: gp2
         StorageEncrypted: false
         Tags:
           - Key: Name
-            Value: ChallengeKaloDB
+            Value: ChallengeKaloDatabase
 
 plugins:
   - serverless-esbuild
@@ -65,7 +60,7 @@ custom:
       - moment-timezone
       - bcryptjs
       - jsonwebtoken
-      - mysql
+      - mysql2
       - middy
       - aws-sdk/client-s3
       - aws-sdk/s3-request-presigner

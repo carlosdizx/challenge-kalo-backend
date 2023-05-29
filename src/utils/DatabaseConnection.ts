@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { DataSource } from "typeorm";
 import dotenv = require("dotenv");
 import User from "../entities/User.entity";
@@ -24,7 +25,7 @@ const dataSource =  new DataSource({
         User,
         Article
     ],
-})
+});
 
 const getConnect = async () => {
     if(!dataSource.isInitialized) {

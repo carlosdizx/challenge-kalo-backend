@@ -23,7 +23,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "jsonwebtoken": "^9.0.0",
-    "mysql": "^2.18.1",
+    "mysql2": "^3.3.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.15"
   },
