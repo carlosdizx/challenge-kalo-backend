@@ -1,19 +1,14 @@
 import getConnect from "../../utils/DatabaseConnection";
+import responseObject from "../../utils/Response";
 
 export const handler = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
     try {
         const datasource = await getConnect();
         await datasource.manager.query(`SELECT 1`);
-        return {
-            statusCode: 200,
-            body: JSON.stringify({message: 'Ping success!'})
-        }
+        return responseObject(200, {message: 'Ping success!'})
     }
     catch (e) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({message: "Failed to establish a database connection."})
-        }
+        return responseObject(500, {message: 'Failed to establish a database connection.'})
     }
 };
