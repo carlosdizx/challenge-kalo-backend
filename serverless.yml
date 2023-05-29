@@ -1,4 +1,4 @@
-service: challenge-kalo
+service: challenge-backend-kalo
 
 provider:
   name: aws
@@ -9,6 +9,12 @@ provider:
       Action:
         - rds-db:connect
       Resource: arn:aws:rds:us-east-1:184440761998:db:database-1
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action: '*'
+          Resource: '*'
   vpc:
     securityGroupIds:
       - sg-0afb89b491edc972a
@@ -20,6 +26,27 @@ provider:
       - subnet-0406d24f3f8bf3ea9
       - subnet-04f756153c4db8eda
 
+resources:
+  Resources:
+    MyDatabase:
+      Type: AWS::RDS::DBInstance
+      Properties:
+        Engine: mysql
+        DBInstanceIdentifier: database-1
+        MasterUsername: admin
+        MasterUserPassword: rootroot
+        AllocatedStorage: 20
+        DBInstanceClass: db.t2.micro
+        VPCSecurityGroups:
+          - sg-0afb89b491edc972a
+        AvailabilityZone: us-east-1a
+        MultiAZ: false
+        PubliclyAccessible: true
+        StorageType: gp2
+        StorageEncrypted: false
+        Tags:
+          - Key: Name
+            Value: ChallengeKaloDB
 
 plugins:
   - serverless-esbuild
@@ -40,6 +67,11 @@ custom:
       - jsonwebtoken
       - mysql
       - middy
+      - aws-sdk/client-s3
+      - aws-sdk/s3-request-presigner
+      - middy/core
+      - middy/http-json-body-parser
+      - middy/http-multipart-body-parser
     watch:
       pattern: [ './index.ts', 'src/**/*.ts' ]
       ignore: [ '.serverless/**/*', '.build' ]
@@ -47,5 +79,3 @@ custom:
     path: env.yml
 functions:
   - ${file(./src/functions/auth/index.functions.yml)}
-  - ${file(./src/functions/users/index.functions.yml)}
-  - ${file(./src/functions/articles/index.functions.yml)}
