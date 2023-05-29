@@ -11,8 +11,6 @@ const port = parseInt(process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_PORT :
 const username = process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_USER : process.env.PROD_DB_MYSQL_USER;
 const password = process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_PASSWORD : process.env.PROD_DB_MYSQL_PASSWORD;
 const database = process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_DATABASE : process.env.PROD_DB_MYSQL_DATABASE;
-console.log("================================>", process.env.IS_OFFLINE);
-console.log("================================>", host, port, username, password, database);
 
 const dataSource =  new DataSource({
     type: "mysql",

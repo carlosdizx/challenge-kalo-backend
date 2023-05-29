@@ -8,7 +8,6 @@ package-lock.json
 .build
 .esbuild
 .esbuild/**
-.env
 mysql-data
 mysql-data/**
 env.yml
