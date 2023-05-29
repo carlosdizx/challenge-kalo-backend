@@ -8,7 +8,7 @@ provider:
     - Effect: Allow
       Action:
         - rds-db:connect
-      Resource: arn:aws:rds-db:region:account-id:dbuser:database-1/*
+      Resource: arn:aws:rds:us-east-1:184440761998:db:database-1
   vpc:
     securityGroupIds:
       - sg-0afb89b491edc972a
@@ -24,6 +24,7 @@ provider:
 plugins:
   - serverless-esbuild
   - serverless-offline
+  - serverless-dotenv-plugin
 
 custom:
   esbuild:
@@ -42,6 +43,8 @@ custom:
     watch:
       pattern: [ './index.ts', 'src/**/*.ts' ]
       ignore: [ '.serverless/**/*', '.build' ]
+  dotenv:
+    path: env.yml
 functions:
   - ${file(./src/functions/auth/index.functions.yml)}
   - ${file(./src/functions/users/index.functions.yml)}

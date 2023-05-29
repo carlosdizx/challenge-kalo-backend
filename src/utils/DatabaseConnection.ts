@@ -4,13 +4,23 @@ import User from "../entities/User.entity";
 import Article from "../entities/Article.entity";
 dotenv.config();
 
+
+
+const host = process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_HOST : process.env.PROD_DB_MYSQL_HOST;
+const port = parseInt(process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_PORT : process.env.PROD_DB_MYSQL_PORT);
+const username = process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_USER : process.env.PROD_DB_MYSQL_USER;
+const password = process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_PASSWORD : process.env.PROD_DB_MYSQL_PASSWORD;
+const database = process.env.IS_OFFLINE ? process.env.LOCAL_DB_MYSQL_DATABASE : process.env.PROD_DB_MYSQL_DATABASE;
+console.log("================================>", process.env.IS_OFFLINE);
+console.log("================================>", host, port, username, password, database);
+
 const dataSource =  new DataSource({
     type: "mysql",
-    host: process.env.DB_MYSQL_HOST,
-    port: parseInt(`${process.env.DB_MYSQL_PORT}`),
-    username: process.env.DB_MYSQL_USER,
-    password: process.env.DB_MYSQL_PASSWORD,
-    database: process.env.DB_MYSQL_DATABASE,
+    host,
+    port,
+    username,
+    password,
+    database,
     synchronize: true,
     entities: [
         User,

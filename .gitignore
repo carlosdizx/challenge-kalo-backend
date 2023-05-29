@@ -11,3 +11,4 @@ package-lock.json
 .env
 mysql-data
 mysql-data/**
+env.yml
