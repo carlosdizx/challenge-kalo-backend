@@ -3,6 +3,8 @@ service: challenge-kalo
 provider:
   name: aws
   runtime: nodejs16.x
+  timeout: 120
+
 
 plugins:
   - serverless-esbuild
@@ -14,13 +16,14 @@ custom:
     external:
       - aws-sdk
       - dotenv
-      - pg
       - reflect-metadata
       - typeorm
       - moment
       - moment-timezone
-      - bcrypt
+      - bcryptjs
       - jsonwebtoken
+      - mysql
+      - middy
     watch:
       pattern: [ './index.ts', 'src/**/*.ts' ]
       ignore: [ '.serverless/**/*', '.build' ]
