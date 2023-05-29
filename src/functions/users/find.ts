@@ -1,7 +1,7 @@
 import {APIGatewayProxyHandler} from "aws-lambda";
 import middy from "@middy/core";
 import hasTokenValid from "../../middleware/hasTokenValid";
-import {parseTypeUser, TypesUser} from "../../Enums/typesUser";
+import {parseTypeUser, TypesUser} from "../../enums/typesUser";
 import UserCrudService from "../../services/user.crud.service";
 import responseObject from "../../utils/Response";
 

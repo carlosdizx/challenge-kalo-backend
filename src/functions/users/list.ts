@@ -1,7 +1,7 @@
 import {APIGatewayProxyHandler} from "aws-lambda";
 import middy from "@middy/core";
 import hasTokenValid from "../../middleware/hasTokenValid";
-import {TypesUser} from "../../Enums/typesUser";
+import {TypesUser} from "../../enums/typesUser";
 import UserCrudService from "../../services/user.crud.service";
 
 const originalHandler: APIGatewayProxyHandler = async (event, context) => {

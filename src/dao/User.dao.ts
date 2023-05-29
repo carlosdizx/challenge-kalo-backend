@@ -1,6 +1,6 @@
 import User from "../entities/User.entity";
 import getConnect from "../utils/DatabaseConnection";
-import {TypesUser} from "../Enums/typesUser";
+import {TypesUser} from "../enums/typesUser";
 
 export default class UserDao {
 

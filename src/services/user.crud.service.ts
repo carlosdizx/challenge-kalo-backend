@@ -1,4 +1,4 @@
-import {TypesUser} from "../Enums/typesUser";
+import {TypesUser} from "../enums/typesUser";
 import {encryptPassword} from "../utils/bcryptUtils";
 import UserDao from "../dao/User.dao";
 import responseObject from "../utils/Response";

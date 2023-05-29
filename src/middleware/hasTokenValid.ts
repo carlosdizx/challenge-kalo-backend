@@ -1,6 +1,6 @@
 import responseObject from "../utils/Response";
 import {verifyToken} from "../utils/AuthUtils";
-import {TypesUser} from "../Enums/typesUser";
+import {TypesUser} from "../enums/typesUser";
 import UserCrudService from "../services/user.crud.service";
 const hasTokenValid = (roles: TypesUser[]) => {
     return {

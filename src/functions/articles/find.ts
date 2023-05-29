@@ -2,7 +2,7 @@ import {APIGatewayProxyHandler} from "aws-lambda";
 import responseObject from "../../utils/Response";
 import middy from "@middy/core";
 import hasTokenValid from "../../middleware/hasTokenValid";
-import {TypesUser} from "../../Enums/typesUser";
+import {TypesUser} from "../../enums/typesUser";
 import ArticlesCrudService from "../../services/articles.crud.service";
 const originalHandler: APIGatewayProxyHandler  = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
