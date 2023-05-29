@@ -4,6 +4,21 @@ provider:
   name: aws
   runtime: nodejs16.x
   timeout: 120
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - rds-db:connect
+      Resource: arn:aws:rds-db:region:account-id:dbuser:database-1/*
+  vpc:
+    securityGroupIds:
+      - sg-0afb89b491edc972a
+    subnetIds:
+      - subnet-02ed626eacfbc9602
+      - subnet-0d1fe66fc1a2adf25
+      - subnet-00195e315b9727147
+      - subnet-02f607f395ad58657
+      - subnet-0406d24f3f8bf3ea9
+      - subnet-04f756153c4db8eda
 
 
 plugins:
