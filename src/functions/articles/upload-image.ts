@@ -15,16 +15,25 @@ const originalHandler  = async (event, context) => {
             return responseObject(409, {message: 'JWT token no contain user id!'});
 
         const {id: articleId} = event.pathParameters;
+
+        if(!process.env.IS_OFFLINE){
+            const buffer = Buffer.from(event.body, 'binary');
+            return await ArticlesCrudService.uploadFileByArticle({image: buffer, type: 'image/jpeg'}, articleId, userId);
+        }
+
         const data = event.body.split("\r\n");
+
         const fileContType = data[2].split(":")[1].trim();
+        console.log("3 =>");
+
         if(!allowedMimes.includes(fileContType))
             return responseObject(400, {message: "File is not a image!"});
-        const fileName = data[1].split(";")[2].split("=")[1].replace(/^"|"$/g, '').trim();
+
         let fileContent = data[4];
         if(data.length === 12)
             fileContent = fileContent.concat(data[5], data[6], data[7], data[8], data[9], data[10], data[11]);
         const buffer = Buffer.from(fileContent, 'binary');
-        return await ArticlesCrudService.uploadFileByArticle({image: buffer, name: fileName, type: fileContType}, articleId, userId);
+        return await ArticlesCrudService.uploadFileByArticle({image: buffer, type: fileContType}, articleId, userId);
     }
     return responseObject(400, {message: 'Form data is required'});
 };

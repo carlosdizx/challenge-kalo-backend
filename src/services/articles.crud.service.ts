@@ -18,7 +18,7 @@ export default class ArticlesCrudService {
         }
     }
     public static uploadFileByArticle = async (
-        {image, name, type}:{image: Buffer, name: string, type: string}, articleId: string, userId: string
+        {image, type}:{image: Buffer, type: string}, articleId: string, userId: string
     ) => {
         const article = await ArticleDao.findById(articleId);
         if(!article) return responseObject(409, {message: "The article does not exist!"});
