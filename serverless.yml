@@ -73,5 +73,7 @@ custom:
   dotenv:
     path: env.yml
 functions:
-  - ${file(./src/functions/auth/index.functions.yml)}
   - ${file(./src/functions/ping/index.functions.yml)}
+  - ${file(./src/functions/auth/index.functions.yml)}
+  - ${file(./src/functions/users/index.functions.yml)}
+  - ${file(./src/functions/articles/index.functions.yml)}

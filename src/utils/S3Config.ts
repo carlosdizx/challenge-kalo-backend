@@ -12,7 +12,8 @@ export const upload = async ({Key, Body, ContentType}: {Key: string, Body: Buffe
         Bucket,
         Key,
         Body,
-        ContentType
+        ContentType,
+        ACL: "public-read",
     });
     
     try {
