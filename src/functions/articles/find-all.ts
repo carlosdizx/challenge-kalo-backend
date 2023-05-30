@@ -4,10 +4,14 @@ import middy from "@middy/core";
 import hasTokenValid from "../../middleware/hasTokenValid";
 import {TypesUser} from "../../enums/typesUser";
 import ArticlesCrudService from "../../services/articles.crud.service";
+import {getUserId} from "../../utils/AuthUtils";
 const originalHandler: APIGatewayProxyHandler  = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
     try {
-        const userId = event.requestContext.authorizer.jwt.claims.id;
+        const token = event.headers.authorization.split(" ")[1];
+        const userId = getUserId(token);
+        if(!userId)
+            return responseObject(409, {message: 'JWT token no contain user id!'});
         return await ArticlesCrudService.findAllArticles(userId);
     }
     catch (err) {

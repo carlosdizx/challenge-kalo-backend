@@ -13,7 +13,7 @@ export const upload = async ({Key, Body, ContentType}: {Key: string, Body: Buffe
         Key,
         Body,
         ContentType,
-        ACL: "public-read",
+        ContentEncoding: "utf-8",
     });
     
     try {

@@ -10,9 +10,9 @@ const originalHandler  = async (event, context) => {
     if(!event.body)
         return responseObject(400, {message: 'Form data is required'});
     const token = event.headers.authorization.split(" ")[1];
-    if(!token)
-        return responseObject(401, {message: 'Check your token!'});
-    const userId = getUserId(token)
+    const userId = getUserId(token);
+    if(!userId)
+        return responseObject(409, {message: 'JWT token no contain user id!'});
     const {title, body} = event.body;
     return await ArticlesCrudService.createArticle({title, body}, userId);
 };
