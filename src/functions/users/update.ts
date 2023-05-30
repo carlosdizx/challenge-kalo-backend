@@ -4,11 +4,13 @@ import {parseTypeUser, TypesUser} from "../../enums/typesUser";
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import UserCrudService from "../../services/user.crud.service";
 import responseObject from "../../utils/Response";
+import {getUserId} from "../../utils/AuthUtils";
 
 const originalHandler = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
     const {id} = event.pathParameters;
-    const userId = event.requestContext.authorizer.jwt.claims.id;
+    const token = event.headers.authorization.split(" ")[1];
+    const userId = getUserId(token);
     const {body} = await UserCrudService.findUserById(userId);
     const user = JSON.parse(body);
     const {name, email, password} = event.body;
