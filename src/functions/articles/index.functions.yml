@@ -9,7 +9,7 @@ upload-image:
   events:
     - httpApi:
         path: /articles/upload/{id}
-        method: PATCH
+        method: POST
 find-article:
   handler: ${self:custom.prefix_module, 'src/functions/articles/'}find.handler
   events:

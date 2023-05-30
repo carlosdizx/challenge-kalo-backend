@@ -3,13 +3,17 @@ service: challenge-back-kalo
 provider:
   name: aws
   runtime: nodejs16.x
-  timeout: 300
   iam:
     role:
       statements:
         - Effect: 'Allow'
           Action: '*'
-          Resource: '*'
+          Resource:
+            Fn::Join:
+              - ""
+              - - "arn:aws:s3:::"
+                - "challenge-kalo"
+                - "/*"
   vpc:
     securityGroupIds:
       - sg-0afb89b491edc972a
