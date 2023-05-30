@@ -12,5 +12,15 @@ const generateToken = async (user: any) =>
 const verifyToken = (token) =>
     jwt.verify(token, JWT_SECRET);
 
+const getUserId = (token: string): string => {
+    try {
+        const {id} = verifyToken(token) as any;
+        return id;
+    }
+    catch (e) {
+        return null;
+    }
+}
+
 
 export { generateToken, verifyToken };
