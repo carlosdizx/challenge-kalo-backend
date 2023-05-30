@@ -4,7 +4,7 @@ import {parseTypeUser, TypesUser} from "../../enums/typesUser";
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import UserCrudService from "../../services/user.crud.service";
 import responseObject from "../../utils/Response";
-import {getUser, getUserId} from "../../utils/AuthUtils";
+import {getUser} from "../../utils/AuthUtils";
 
 const originalHandler = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
