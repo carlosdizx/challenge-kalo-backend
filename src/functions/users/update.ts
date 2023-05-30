@@ -7,7 +7,7 @@ import responseObject from "../../utils/Response";
 
 const originalHandler = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
-    const {id: idSend} = event.pathParameters;
+    const {id} = event.pathParameters;
     const userId = event.requestContext.authorizer.jwt.claims.id;
     const {body} = await UserCrudService.findUserById(userId);
     const user = JSON.parse(body);
@@ -20,9 +20,9 @@ const originalHandler = async (event, context) => {
         return responseObject(400, { message: "Email is required" });
     else if (password && password.trim() === "")
         return responseObject(400, { message: "Password is required" });
-    else if(typeUserFound === null || (typeUserFound === TypesUser.USER && idSend !== userId))
+    else if(typeUserFound === null || (typeUserFound === TypesUser.USER && id !== userId))
         return responseObject(403, { message: "You have not permissions" });
-    return await UserCrudService.update({name, email, password}, idSend);
+    return await UserCrudService.update({name, email, password}, id);
 };
 
 export const handler = middy()
