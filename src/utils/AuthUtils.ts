@@ -9,12 +9,12 @@ const JWT_EXPIRES = process.env.JWT_EXPIRES;
 export const generateToken = async (user: any) =>
     jwt.sign(user, JWT_SECRET, {expiresIn: JWT_EXPIRES});
 
-export const verifyToken = (token) =>
+const verifyToken = (token) =>
     jwt.verify(token, JWT_SECRET);
 
 export const getUser = (token: string): any => {
     try {
-        return verifyToken(token) as any;
+        return verifyToken(token);
     }
     catch (e) {
         return null;
@@ -23,7 +23,7 @@ export const getUser = (token: string): any => {
 
 export const getUserId = (token: string): string => {
     try {
-        const {id} = verifyToken(token) as any;
+        const {id} = getUser(token);
         return id;
     }
     catch (e) {
