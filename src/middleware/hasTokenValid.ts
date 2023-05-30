@@ -1,5 +1,5 @@
 import responseObject from "../utils/Response";
-import {verifyToken} from "../utils/AuthUtils";
+import {getUser, verifyToken} from "../utils/AuthUtils";
 import {TypesUser} from "../enums/typesUser";
 const hasTokenValid = (roles: TypesUser[]) => {
     return {
@@ -11,16 +11,13 @@ const hasTokenValid = (roles: TypesUser[]) => {
             const {authorization} = headers;
             const token = authorization && authorization.split(" ")[1];
             if(token){
-                try {
-                    const valid: any = verifyToken(token);
-                    if(roles.length > 0){
-                        const roleFindIsValid = roles.includes(valid.type);
-                        if(!roleFindIsValid)
-                            return responseObject(409, {message: "Your rol is not allowed to access this!"});
-                    }
-                }
-                catch (err) {
-                    return responseObject(409, {message: "Your token is invalid!"});
+                const user = getUser(token);
+                if(!user)
+                    return responseObject(409, {message: 'JWT is invalid'});
+                if(roles.length > 0){
+                    const roleFindIsValid = roles.includes(user.type);
+                    if(!roleFindIsValid)
+                        return responseObject(409, {message: "Your rol is not allowed to access this!"});
                 }
             }else
                 return responseObject(403, {message: "You are not allowed to access this!"});
