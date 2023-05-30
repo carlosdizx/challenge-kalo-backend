@@ -11,11 +11,11 @@ export const originalHandler = async (event, context) => {
 
     const {name, email, password} = event.body;
 
-    if (name.trim() === "")
+    if (!name || name.trim() === "")
         return responseObject(400, { message: "Name is required" });
-    else if (email.trim() === "")
+    else if (!email || email.trim() === "")
         return responseObject(400, { message: "Email is required" });
-    else if (password.trim() === "")
+    else if (!password || password.trim() === "")
         return responseObject(400, { message: "Password is required" });
 
     return await UsersAuthService.registerUser({name, email, password});

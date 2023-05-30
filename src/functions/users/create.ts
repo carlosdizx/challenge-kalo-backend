@@ -11,11 +11,11 @@ const originalHandler: APIGatewayProxyHandler = async (event, context) => {
     if (typeof event.body === "string"){
         const {name, email, password, type} = JSON.parse(event.body);
 
-        if (name.trim() === "")
+        if (!name || name.trim() === "")
             return responseObject(400, { message: "Name is required" });
-        else if (email.trim() === "")
+        else if (!email || email.trim() === "")
             return responseObject(400, { message: "Email is required" });
-        else if (password.trim() === "")
+        else if (!password || password.trim() === "")
             return responseObject(400, { message: "Password is required" });
 
         return await UserCrudService.create(name, email, password, type);

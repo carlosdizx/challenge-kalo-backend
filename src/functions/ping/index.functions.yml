@@ -4,3 +4,9 @@ ping-database:
     - httpApi:
         path: /ping/database
         method: GET
+admin-platform:
+  handler: ${self:custom.prefix_module, 'src/functions/ping/'}create-admin.handler
+  events:
+    - httpApi:
+        path: /ping/admin
+        method: POST
