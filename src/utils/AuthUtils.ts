@@ -23,4 +23,4 @@ const getUserId = (token: string): string => {
 }
 
 
-export { generateToken, verifyToken };
+export { generateToken, verifyToken, getUserId };
