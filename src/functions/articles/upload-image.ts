@@ -1,10 +1,10 @@
 import responseObject from "../../utils/Response";
 import middy from "@middy/core";
-import hasTokenValid from "../../middleware/hasTokenValid";
-import {TypesUser} from "../../enums/typesUser";
 import ArticlesCrudService from "../../services/articles.crud.service";
 import {getUserId} from "../../utils/AuthUtils";
 const allowedMimes = ['image/jpeg', 'image/png', 'image/jpg'];
+import httpHeaderNormalizer from '@middy/http-header-normalizer'
+import httpMultipartBodyParser from '@middy/http-multipart-body-parser'
 
 const originalHandler  = async (event, context) => {
     console.log(`HANDLER: Starting ${context.functionName}...`);
@@ -14,30 +14,26 @@ const originalHandler  = async (event, context) => {
         if(!userId)
             return responseObject(409, {message: 'JWT token no contain user id!'});
 
-        const {id: articleId} = event.pathParameters;
+        const {image} = event.body;
+        if (!image)
+            return responseObject(409, {message: 'Property image not found!'});
 
-        if(!process.env.IS_OFFLINE){
-            const buffer = Buffer.from(event.body, 'binary');
-            return await ArticlesCrudService.uploadFileByArticle({image: buffer, type: 'image/jpeg'}, articleId, userId);
-        }
+        const {mimetype, content} = image;
 
-        const data = event.body.split("\r\n");
-
-        const fileContType = data[2].split(":")[1].trim();
-        console.log("3 =>");
-
-        if(!allowedMimes.includes(fileContType))
+        if(!allowedMimes.includes(mimetype))
             return responseObject(400, {message: "File is not a image!"});
 
-        let fileContent = data[4];
-        if(data.length === 12)
-            fileContent = fileContent.concat(data[5], data[6], data[7], data[8], data[9], data[10], data[11]);
-        const buffer = Buffer.from(fileContent, 'binary');
-        return await ArticlesCrudService.uploadFileByArticle({image: buffer, type: fileContType}, articleId, userId);
+        const {id: articleId} = event.pathParameters;
+        const isBuffer = Buffer.isBuffer(content);
+        if(!isBuffer)
+            return responseObject(409, {message: 'Image is corrupted'});
+
+        return await ArticlesCrudService.uploadFileByArticle({image: content, type: mimetype}, articleId, userId);
     }
     return responseObject(400, {message: 'Form data is required'});
 };
 
 export const handler = middy()
-    .use(hasTokenValid([TypesUser.USER]))
+    .use(httpHeaderNormalizer())
+    .use(httpMultipartBodyParser())
     .handler(originalHandler);
