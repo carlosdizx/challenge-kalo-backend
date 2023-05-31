@@ -11,6 +11,9 @@ export default class Article extends BaseEntity{
     @Column({name:"body", type: "text"})
     body: string;
 
+    @Column({name:"id_wordpress", type: "int", unique: true})
+    idWordPress: number;
+
     @ManyToOne(() => User, user => user.articles)
     @JoinColumn({name: "user_id"})
     user: User;

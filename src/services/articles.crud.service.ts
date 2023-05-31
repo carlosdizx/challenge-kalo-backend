@@ -11,9 +11,9 @@ export default class ArticlesCrudService {
         if(!user)
             return responseObject(409, {message: "You do not have permission!"});
         try {
-            const article = await ArticleDao.create(title, body, user);
-            const resultWordPress = await WordpressService.createPost(title, body);
-            return responseObject(200, {message: "Article created", article: article.id, resultWordPress});
+            const {id: idWordPress} = await WordpressService.createPost(title, body);
+            const article = await ArticleDao.create(title, body, user, idWordPress);
+            return responseObject(200, {message: "Article created", article: article.id, idWordPress});
         }
         catch (e) {
             return responseObject(500, {message: "Article creation error,", e})

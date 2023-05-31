@@ -4,10 +4,10 @@ import User from "../entities/User.entity";
 
 export default class ArticleDao {
 
-    public static create = async (title: string,  body: string, user: User) => {
+    public static create = async (title: string,  body: string, user: User, idWordPress: number) => {
         const datasource = await getConnect();
         const repository = datasource.getRepository(Article);
-        const article = repository.create({ title, body, user });
+        const article = repository.create({ title, body, user, idWordPress });
         return await repository.save(article);
     }
 
