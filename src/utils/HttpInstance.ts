@@ -1,7 +1,7 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-
+import axios, { AxiosInstance  } from 'axios';
+const URL = process.env.URL_WORDPRESS;
 const axiosInstance: AxiosInstance = axios.create({
-    baseURL: 'https://ernestodiaz.000webhostapp.com/wp-json/'
+    baseURL: URL
 });
 
 export default axiosInstance;
