@@ -8,7 +8,7 @@ export default class Article extends BaseEntity{
     @Column({name:"title", type: "varchar"})
     title: string;
 
-    @Column({name:"body", type: "varchar"})
+    @Column({name:"body", type: "text"})
     body: string;
 
     @ManyToOne(() => User, user => user.articles)
