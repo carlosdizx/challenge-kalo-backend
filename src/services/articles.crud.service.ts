@@ -2,6 +2,7 @@ import {getFileUrl, upload} from "../utils/S3Config";
 import responseObject from "../utils/Response";
 import ArticleDao from "../dao/Article.dao";
 import UserDao from "../dao/User.dao";
+import WordpressService from "./wordpress.service";
 
 export default class ArticlesCrudService {
 
@@ -11,7 +12,8 @@ export default class ArticlesCrudService {
             return responseObject(409, {message: "You do not have permission!"});
         try {
             const article = await ArticleDao.create(title, body, user);
-            return responseObject(200, {message: "Article created", article: article.id});
+            const resultWordPress = await WordpressService.createPost(title, body);
+            return responseObject(200, {message: "Article created", article: article.id, resultWordPress});
         }
         catch (e) {
             return responseObject(500, {message: "Article creation error,", e})
