@@ -27,6 +27,8 @@ export default class ArticlesCrudService {
         const Key = `${userId}/${articleId}`;
         try {
             await upload({Key, Body: image, ContentType: type});
+            const urlImage = await this.getUrlImage(Key);
+            await WordpressService.updatePost(article.idWordPress, article.title, article.body, urlImage);
             return responseObject(200, {message: "Image upload correctly!"});
         }
         catch (e) {
