@@ -1,6 +1,6 @@
 import responseObject from "../../utils/Response";
 import middy from "@middy/core";
-import httpHeaderNormalizer from '@middy/http-header-normalizer'
+import httpHeaderNormalizer from '@middy/http-header-normalizer';
 import httpJsonBodyParser from '@middy/http-json-body-parser'
 import UserCrudService from "../../services/user.crud.service";
 import {TypesUser} from "../../enums/typesUser";
