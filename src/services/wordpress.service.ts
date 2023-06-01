@@ -28,7 +28,7 @@ export default class WordpressService {
 
     public static updatePost = async (idWordPress: number,title: string, body: string, imageUrl: string) => {
         const token = await WordpressService.generateJWT();
-        const html = `<img src="${imageUrl}" alt="Imagen caducada" /><hr/>
+        const html = `<img src="${imageUrl}" alt="Imagen caducada por temas presupuestales" /><hr/>
                             <p>${body}</p>`
         const {data} = await axiosInstance.post(`wp/v2/posts/${idWordPress}`, {
             title,
