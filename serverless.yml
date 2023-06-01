@@ -32,7 +32,7 @@ resources:
           - sg-0afb89b491edc972a
         AvailabilityZone: us-east-1a
         MultiAZ: false
-        PubliclyAccessible: false
+        PubliclyAccessible: true
         StorageType: gp2
         StorageEncrypted: false
         Tags:
