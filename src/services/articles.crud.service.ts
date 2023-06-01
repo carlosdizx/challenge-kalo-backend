@@ -11,7 +11,7 @@ export default class ArticlesCrudService {
         if(!user)
             return responseObject(409, {message: "You do not have permission!"});
         try {
-            const {id: idWordPress} = await WordpressService.createPost(title, body);
+            const {id: idWordPress} = await WordpressService.createPost(title, body, user.name);
             const article = await ArticleDao.create(title, body, user, idWordPress);
             return responseObject(200, {message: "Article created", article: article.id, idWordPress});
         }
@@ -32,6 +32,7 @@ export default class ArticlesCrudService {
             return responseObject(200, {message: "Image upload correctly!"});
         }
         catch (e) {
+            console.log(e);
             return responseObject(500, "Error uploading image!");
         }
     }

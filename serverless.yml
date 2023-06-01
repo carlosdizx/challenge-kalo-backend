@@ -4,6 +4,7 @@ provider:
   name: aws
   runtime: nodejs16.x
   timeout: 200
+  memory: 2048
   iam:
     role:
       statements:

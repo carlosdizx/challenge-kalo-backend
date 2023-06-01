@@ -33,7 +33,9 @@ export const getFileUrl = async (Key: string) => {
 
     try {
         await s3Client.send(command);
-        return await getSignedUrl(s3Client, new GetObjectCommand({ Bucket, Key }));
+        return await getSignedUrl(s3Client, new GetObjectCommand({ Bucket, Key }), {
+            expiresIn: 3600
+        });
     } catch (e) {
         throw e;
     }
